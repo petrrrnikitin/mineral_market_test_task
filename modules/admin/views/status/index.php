@@ -5,42 +5,29 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Товары';
+$this->title = 'Statuses';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-index">
+<div class="status-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <p>
+        <?= Html::a('Create Status', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
     <?php Pjax::begin(); ?>
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'summary' => false,
         'columns' => [
 
-            ['attribute' => 'id',
-                'contentOptions' => ['style' => 'width:40px'],
-            ],
-            'name',
-            'description',
-            [
-                'attribute' => 'updated_at',
-                'content' => function($data){
-                    return $data->getUpdatedAt();
-                }
-            ],
-            [
-                'attribute' => 'price',
-                'content' => function($data) {
-                    return $data->getPrice();
-                }
-            ],
-            'amount',
+            'id',
+            'status',
+            'status_color',
+
 
             ['class' => 'yii\grid\ActionColumn',
                 'contentOptions' => ['style' => '', 'class' => 'd-flex'],
@@ -68,7 +55,7 @@ $this->title = 'Товары';
 </svg>', $url, [
                             'title' => Yii::t('app', 'delete'),
                             'data' => [
-                                'confirm' => 'Вы уверены что хотите удалить данный товар ?',
+                                'confirm' => 'Вы уверены что хотите удалить данный статус ?',
                                 'method' => 'post',
                             ],
                         ]);

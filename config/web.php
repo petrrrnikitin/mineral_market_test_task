@@ -10,7 +10,7 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'modules' => [
         'admin' => [
@@ -18,7 +18,16 @@ $config = [
             'layout' => 'admin'
         ],
     ],
+
     'components' => [
+        'formatter' =>
+            [
+                'class' => 'yii\i18n\Formatter',
+                'dateFormat' => 'php:d-m-Y',
+                'datetimeFormat' => 'php:d-m-Y H:i ',
+                'timeFormat' => 'php:H:i A',
+                'locale' => 'RU-ru'
+            ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '-z9JSfir0cyWnUr_v4dAySaYAj4t6HMB',

@@ -79,7 +79,7 @@ AppAsset::register($this);
                     </button>
                     <div id="orders" class="collapse" aria-labelledby="orders">
                         <div class="card-body">
-                            <?= Html::a('Все заказы', ['generate'], ['class' => 'btn btn-link d-block ']) ?>
+                            <?= Html::a('Все заказы', ['admin/order/index'], ['class' => 'btn btn-link d-block ']) ?>
                             <?= Html::a('Новые заказы', ['generate'], ['class' => 'btn btn-link d-block ']) ?>
                             <?= Html::a('Создать заказ', ['generate'], ['class' => 'btn btn-link d-block ']) ?>
                         </div>
@@ -89,16 +89,17 @@ AppAsset::register($this);
                     <button class="btn btn-link btn-block text-left collapsed" type="button"
                             data-toggle="collapse"
                             data-target="#status" aria-expanded="true" aria-controls="status">
-                        Заказы
+                        Статусы
                     </button>
                     <div id="status" class="collapse" aria-labelledby="status">
                         <div class="card-body">
-                            <?= Html::a('Все статусы', ['generate'], ['class' => 'btn btn-link d-block ']) ?>
-                            <?= Html::a('Создать статус', ['generate'], ['class' => 'btn btn-link d-block ']) ?>
+                            <?= Html::a('Все статусы', ['/admin/status/index'], ['class' => 'btn btn-link d-block ']) ?>
+                            <?= Html::a('Создать статус', ['/admin/status/create'], ['class' => 'btn btn-link d-block ']) ?>
                         </div>
                     </div>
                 </div>
-                <?= Html::a('Сгенерировать товары', ['generate'], ['class' => 'btn btn-success mt-3']) ?>
+                <?= Html::a('Сгенерировать товары', ['/admin/default/generateproducts'], ['class' => 'btn btn-success mt-3']) ?>
+                <?= Html::a('Сгенерировать статусы', ['/admin/default/generatestatus'], ['class' => 'btn btn-success mt-3']) ?>
             </aside>
 
             <div class="d-flex flex-fill flex-column p-lg-3 p-1">

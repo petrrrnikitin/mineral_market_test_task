@@ -32,9 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
         if (is_file($img)) {
             $url = Yii::getAlias('@web') . '/images/products/source/' .  $model->img;
             echo  '<img src="/images/products/small/'. html::encode($model->img) . '" alt="">';
-            echo $form->field($model,'remove')->checkbox();
         } else {
-            echo '<img class="mb-3" src=" ' .html::encode($model->img) .'" alt="'.html::encode($model->name) .'">';
+            echo '<img width="240" height="320" class="mb-3" src=" ' .html::encode($model->img) .'" alt="'.html::encode($model->name) .'">';
         }
     }
     ?>
@@ -49,7 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'description',
             'price',
             'amount',
-            'img',
             [
                 'attribute' => 'created_at',
                 'value' => $model->getCreatedAt()
