@@ -18,11 +18,10 @@ class m200623_075533_create_order_table extends Migration
             'address' => $this->string(),
             'comment' => $this->text(),
             'email' => $this->string(),
-            'phone' => $this->integer(),
+            'phone' => $this->bigInteger(),
             'status_id' => $this->integer(),
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
         ]);
 
         $this->addForeignKey(

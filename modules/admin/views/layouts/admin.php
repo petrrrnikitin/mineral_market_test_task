@@ -79,9 +79,8 @@ AppAsset::register($this);
                     </button>
                     <div id="orders" class="collapse" aria-labelledby="orders">
                         <div class="card-body">
-                            <?= Html::a('Все заказы', ['admin/order/index'], ['class' => 'btn btn-link d-block ']) ?>
-                            <?= Html::a('Новые заказы', ['generate'], ['class' => 'btn btn-link d-block ']) ?>
-                            <?= Html::a('Создать заказ', ['generate'], ['class' => 'btn btn-link d-block ']) ?>
+                            <?= Html::a('Все заказы', ['/admin/order/index'], ['class' => 'btn btn-link d-block ']) ?>
+                            <?= Html::a('Создать заказ', ['/admin/order/create'], ['class' => 'btn btn-link d-block ']) ?>
                         </div>
                     </div>
                 </div>
@@ -98,8 +97,9 @@ AppAsset::register($this);
                         </div>
                     </div>
                 </div>
-                <?= Html::a('Сгенерировать товары', ['/admin/default/generateproducts'], ['class' => 'btn btn-success mt-3']) ?>
-                <?= Html::a('Сгенерировать статусы', ['/admin/default/generatestatus'], ['class' => 'btn btn-success mt-3']) ?>
+                <?= Html::a('Сгенерировать товары', ['/admin/default/products'], ['class' => 'btn btn-success mt-3']) ?>
+                <?= Html::a('Сгенерировать статусы', ['/admin/default/status'], ['class' => 'btn btn-success mt-3']) ?>
+                <?= Html::a('Сгенерировать Заказы', ['/admin/default/orders'], ['class' => 'btn btn-success mt-3']) ?>
             </aside>
 
             <div class="d-flex flex-fill flex-column p-lg-3 p-1">

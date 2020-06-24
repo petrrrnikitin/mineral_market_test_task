@@ -2,9 +2,12 @@
 
 namespace app\modules\admin\controllers;
 
+use app\models\OrderItem;
 use app\models\Product;
 use app\models\Status;
+use app\models\Order;
 use Faker\Factory;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use Yii;
 
@@ -34,10 +37,24 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $newOrders = new ActiveDataProvider([
+            'query' => Order::find()
+                ->where(['status_id' => 3])
+                ->orderBy(['created_at' => SORT_ASC]),
+            'sort' => false,
+            'pagination' => [
+                'pageSize' => 5,
+                'pageParam' => 'queue',
+
+            ]
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $newOrders,
+        ]);
     }
 
-    public function actionGenerateproducts()
+    public function actionProducts()
     {
         $faker = Factory::create();
 
@@ -55,14 +72,14 @@ class DefaultController extends Controller
         return $this->redirect(['/admin/product/index']);
     }
 
-    public function actionGeneratestatus()
+    public function actionStatus()
     {
         $status_items = [
-            ['color' => 'bg-orange', 'status' => 'Собран'],
-            ['color' => 'bg-green', 'status' => 'Отправлен'],
-            ['color' => 'bg-yellow', 'status' => 'Новый'],
-            ['color' => 'bg-red', 'status' => 'Отменен'],
-            ['color' => 'bg-blue', 'status' => 'Готов к отправке']
+            ['color' => 'bg-warning', 'status' => 'Собран'],
+            ['color' => 'bg-success', 'status' => 'Отправлен'],
+            ['color' => 'bg-primary', 'status' => 'Новый'],
+            ['color' => 'bg-danger', 'status' => 'Отменен'],
+            ['color' => 'bg-dark', 'status' => 'Готов к отправке']
         ];
         foreach ($status_items as $status_item) {
             $status = new Status();
@@ -72,5 +89,32 @@ class DefaultController extends Controller
         }
         Yii::$app->session->setFlash('success', 'Статусы сгенерированы');
         return $this->redirect(['/admin/status/index']);
+    }
+
+    public function actionOrders()
+    {
+        $faker = Factory::create();
+
+        for ($i = 0; $i < 100; $i++) {
+            $order = new Order();
+
+            $order->name = $faker->text(25);
+            $order->address = $faker->address;
+            $order->comment = $faker->paragraph(rand(1,3));
+            $order->email = $faker->email;
+            $order->phone = $faker->phoneNumber;
+            $order->status_id = $faker->numberBetween(1,5);
+            $order->save();
+        }
+        for ($j = 0; $j < 100; $j++) {
+            $orderItem =  new OrderItem();
+            $orderItem->order_id = $faker->numberBetween(0,100);
+            $orderItem->quantity = $faker->numberBetween(0,10);
+            $orderItem->product_id = $faker->numberBetween(0,100);
+            $orderItem->save();
+        }
+
+        Yii::$app->session->setFlash('success', 'Заказы созданы');
+        return $this->redirect(['/admin/order/index']);
     }
 }

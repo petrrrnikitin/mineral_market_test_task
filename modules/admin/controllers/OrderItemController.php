@@ -67,7 +67,7 @@ class OrderItemController extends Controller
         $model = new OrderItem();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['order/view', 'id' => $model->order_id]);
         }
 
         return $this->render('create', [

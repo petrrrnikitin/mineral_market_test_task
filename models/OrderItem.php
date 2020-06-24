@@ -45,8 +45,8 @@ class OrderItem extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'order_id' => 'Order ID',
-            'product_id' => 'Product ID',
-            'quantity' => 'Quantity',
+            'product_id' => 'Товар',
+            'quantity' => 'Количество',
         ];
     }
 
@@ -68,5 +68,9 @@ class OrderItem extends \yii\db\ActiveRecord
     public function getProduct()
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+
+    public function getPrice() {
+        return $this->product->price;
     }
 }
