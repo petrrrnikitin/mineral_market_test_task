@@ -85,6 +85,19 @@ AppAsset::register($this);
                         </div>
                     </div>
                 </div>
+                <div class="card mt-3">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button"
+                            data-toggle="collapse"
+                            data-target="#status" aria-expanded="true" aria-controls="status">
+                        Заказы
+                    </button>
+                    <div id="status" class="collapse" aria-labelledby="status">
+                        <div class="card-body">
+                            <?= Html::a('Все статусы', ['generate'], ['class' => 'btn btn-link d-block ']) ?>
+                            <?= Html::a('Создать статус', ['generate'], ['class' => 'btn btn-link d-block ']) ?>
+                        </div>
+                    </div>
+                </div>
                 <?= Html::a('Сгенерировать товары', ['generate'], ['class' => 'btn btn-success mt-3']) ?>
             </aside>
 

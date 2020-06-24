@@ -16,7 +16,7 @@ $this->title = 'Товары';
 
 
     <?php Pjax::begin(); ?>
-        <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,7 +28,18 @@ $this->title = 'Товары';
             ],
             'name',
             'description',
-            'price',
+            [
+                'attribute' => 'updated_at',
+                'content' => function($data){
+                    return $data->getUpdatedAt();
+                }
+            ],
+            [
+                'attribute' => 'price',
+                'content' => function($data) {
+                    return $data->getPrice();
+                }
+            ],
             'amount',
 
             ['class' => 'yii\grid\ActionColumn',

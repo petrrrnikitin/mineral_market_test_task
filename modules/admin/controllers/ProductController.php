@@ -8,7 +8,7 @@ use app\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\UploadedFile;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
@@ -62,18 +62,23 @@ class ProductController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new Product();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+    public function actionCreate() {
+        $model = new Product();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->upload = UploadedFile::getInstance($model, 'img');
+            if ($name = $model->uploadImage()) { // если изображение было загружено
+                $model->img = $name;
+            }
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return $this->render(
+            'create',
+            ['model' => $model]
+        );
     }
+
 
     /**
      * Updates an existing Product model.
@@ -82,14 +87,29 @@ class ProductController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $old = $model->img;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->remove) {
+                if (!empty($old)) {
+                    $model::removeImage($old);
+                }
+                $model->img = '';
+                $old = '';
+            } else {
+                $model->img = $old;
+            }
+            $model->upload = UploadedFile::getInstance($model, 'img');
+            if ($new = $model->uploadImage()) {
+                if (!empty($old)) {
+                    $model::removeImage($old);
+                }
+                $model->img = $new;
+            }
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -108,6 +128,7 @@ class ProductController extends Controller
 
         return $this->redirect(['index']);
     }
+
 
 
 

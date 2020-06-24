@@ -25,7 +25,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-    <img src="<?=html::encode($model->img)?>" alt="">
+
+    <?php
+    if (!empty($model->img)) {
+        $img = Yii::getAlias('@webroot') . '/images/products/source/' .  $model->img;
+        if (is_file($img)) {
+            $url = Yii::getAlias('@web') . '/images/products/source/' .  $model->img;
+            echo  '<img src="/images/products/small/'. html::encode($model->img) . '" alt="">';
+            echo $form->field($model,'remove')->checkbox();
+        } else {
+            echo '<img class="mb-3" src=" ' .html::encode($model->img) .'" alt="'.html::encode($model->name) .'">';
+        }
+    }
+    ?>
+
+
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -34,6 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'description',
             'price',
             'amount',
+            'img',
             [
                 'attribute' => 'created_at',
                 'value' => $model->getCreatedAt()
